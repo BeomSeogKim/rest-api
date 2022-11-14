@@ -2,12 +2,19 @@ package inflearn.whiteship.restapiwithspring.events;
 
 import lombok.*;
 
+import javax.persistence.Entity;
+import javax.persistence.Enumerated;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
 import java.time.LocalDateTime;
+
+import static javax.persistence.EnumType.STRING;
 
 @Builder @AllArgsConstructor @NoArgsConstructor
 @Getter @Setter @EqualsAndHashCode(of = "id")
+@Entity
 public class Event {
-
+    @Id @GeneratedValue
     private Integer id;
     private String name;
     private String description;
@@ -21,5 +28,6 @@ public class Event {
     private int limitOfEnrollment;
     private boolean offline;
     private boolean free;
+    @Enumerated(STRING)
     private EventStatus eventStatus;
 }
