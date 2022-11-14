@@ -10,4 +10,6 @@
 1. Controller Test 개발 시작
    1. post 의 경우 MockMvcRequestBuilders.post 사용
    2. status 의 경우 MockMvcResultMatchers.status 사용
-        
+
+cf. Web 관련 테스트는 SpringBootTest로 작성하는 것이 편함(Mocking 할 게 너무 많다.) 
+-> @SpringBootTest, @AutoConfigureMockMvc 사용하자.
