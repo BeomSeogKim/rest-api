@@ -41,6 +41,10 @@ dependencies {
     //Spring-Boot-Starter-Validation
     // https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-validation
     implementation group: 'org.springframework.boot', name: 'spring-boot-starter-validation', version: '2.7.4'
+    // JunitParams
+    // https://mvnrepository.com/artifact/pl.pragmatists/JUnitParams
+    testImplementation group: 'pl.pragmatists', name: 'JUnitParams', version: '1.1.1'
+
 
 
 }
