@@ -64,10 +64,10 @@ public class EventControllerTests {
                 .andDo(print())  // 요청받은 정보를 테스트 상에서 확인 할 수 있음
                 .andExpect(status().isCreated())
                 .andExpect(jsonPath("id").exists())    // id가 나오는지 확인
-                .andExpect(header().exists("Location"))
+                .andExpect(header().exists(HttpHeaders.LOCATION))
                 .andExpect(header().string(HttpHeaders.CONTENT_TYPE, MediaTypes.HAL_JSON_VALUE))
-                .andExpect(jsonPath("id").value(Matchers.not(100)))
-                .andExpect(jsonPath("free").value(Matchers.not(true)))
+                .andExpect(jsonPath("free").value(false))
+                .andExpect(jsonPath("offline").value(true))
                 .andExpect(jsonPath("eventStatus").value(DRAFT.name()));
 
 
