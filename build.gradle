@@ -2,7 +2,7 @@ plugins {
     id 'java'
     id 'org.springframework.boot' version '2.7.5'
     id 'io.spring.dependency-management' version '1.0.15.RELEASE'
-    id 'org.asciidoctor.convert' version '1.5.8'
+    id "org.asciidoctor.convert" version "1.5.3"
 }
 
 group = 'inflearn.whiteship'
@@ -29,7 +29,7 @@ dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-web'
     compileOnly 'org.projectlombok:lombok'
     // h2 : test scope , postgres : compile scope
-    runtimeOnly 'com.h2database:h2'
+    testCompileOnly 'com.h2database:h2'
     runtimeOnly 'org.postgresql:postgresql'
     annotationProcessor 'org.projectlombok:lombok'
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
@@ -45,8 +45,22 @@ dependencies {
     // https://mvnrepository.com/artifact/pl.pragmatists/JUnitParams
     testImplementation group: 'pl.pragmatists', name: 'JUnitParams', version: '1.1.1'
 
+    // Ascii Doc
+    asciidoctor 'org.springframework.restdocs:spring-restdocs-asciidoctor:2.0.2.RELEASE'
+    testCompileOnly 'org.springframework.restdocs:spring-restdocs-mockmvc:2.0.2.RELEASE'
+}
+ext {
+    snippetsDir = file('build/generated-snippets')
+}
+
+bootJar {
+    dependsOn asciidoctor
+    copy {
+        from "${asciidoctor.outputDir}"
+        into 'src/main/resources/static/docs'
 
 
+    }
 }
 
 tasks.named('test') {

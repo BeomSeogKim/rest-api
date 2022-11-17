@@ -12,6 +12,7 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.restdocs.RestDocumentationContextProvider;
 import org.springframework.restdocs.RestDocumentationExtension;
+import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
@@ -37,6 +38,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 //@WebMvcTest     // Web 전용 Bean 들만 등록을 해주고 Repository 는 등록을 안해줌
 @SpringBootTest
 @AutoConfigureMockMvc
+@ActiveProfiles("test")
 public class EventControllerTests {
 
     @Autowired
@@ -99,7 +101,8 @@ public class EventControllerTests {
                         links(
                                 linkWithRel("self").description("link to self"),
                                 linkWithRel("query-events").description("link to query events"),
-                                linkWithRel("update-event").description("link to update an existing event")
+                                linkWithRel("update-event").description("link to update an existing event"),
+                                linkWithRel("profile").description("link to profile")
                         ),
                         requestHeaders(
                                 headerWithName(HttpHeaders.ACCEPT).description("accept header"),
@@ -138,7 +141,8 @@ public class EventControllerTests {
                                 fieldWithPath("eventStatus").description("event Status"),
                                 fieldWithPath("_links.self.href").description("link to self"),
                                 fieldWithPath("_links.query-events.href").description("link to query event list"),
-                                fieldWithPath("_links.update-event.href").description("link to update existing event")
+                                fieldWithPath("_links.update-event.href").description("link to update existing event"),
+                                fieldWithPath("_links.profile.href").description("link to profile")
                         )
 
 
