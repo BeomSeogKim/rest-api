@@ -829,7 +829,7 @@ Host: tommy.me
 <pre class="highlightjs highlight nowrap"><code class="language-http" data-lang="http">HTTP/1.1 201 Created
 Location: http://tommy.me/api/events/1
 Content-Type: application/hal+json
-Content-Length: 715
+Content-Length: 804
 
 {
   "id" : 1,
@@ -855,6 +855,9 @@ Content-Length: 715
     },
     "update-event" : {
       "href" : "http://tommy.me/api/events/1"
+    },
+    "profile" : {
+      "href" : "/docs/html5/index.html#resources-events-create"
     }
   }
 }</code></pre>
@@ -987,6 +990,11 @@ Content-Length: 715
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">link to update existing event</p></td>
 </tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>_links.profile.href</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">link to profile</p></td>
+</tr>
 </tbody>
 </table>
 </div>
@@ -1015,6 +1023,10 @@ Content-Length: 715
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>update-event</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">link to update an existing event</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>profile</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">link to profile</p></td>
 </tr>
 </tbody>
 </table>
