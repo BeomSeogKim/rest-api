@@ -1,14 +1,13 @@
 package inflearn.whiteship.restapiwithspring.events;
 
+import inflearn.whiteship.restapiwithspring.accounts.Account;
 import lombok.*;
 
-import javax.persistence.Entity;
-import javax.persistence.Enumerated;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.time.LocalDateTime;
 
 import static javax.persistence.EnumType.STRING;
+import static javax.persistence.FetchType.LAZY;
 
 @Builder @AllArgsConstructor @NoArgsConstructor
 @Getter @Setter @EqualsAndHashCode(of = "id")
@@ -30,6 +29,8 @@ public class Event {
     private boolean free;
     @Enumerated(STRING)
     private EventStatus eventStatus = EventStatus.DRAFT;
+    @ManyToOne(fetch = LAZY)
+    private Account manager;
 
     public void update() {
         // Update Free
