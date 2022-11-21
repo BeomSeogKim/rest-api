@@ -827,12 +827,12 @@ Host: tommy.me
 <div class="listingblock">
 <div class="content">
 <pre class="highlightjs highlight nowrap"><code class="language-http" data-lang="http">HTTP/1.1 201 Created
-Location: http://tommy.me/api/events/1
+Location: http://tommy.me/api/events/32
 Content-Type: application/hal+json
-Content-Length: 804
+Content-Length: 807
 
 {
-  "id" : 1,
+  "id" : 32,
   "name" : "Spring",
   "description" : "REST API Development with Spring",
   "beginEnrollmentDateTime" : "2022-11-14T20:32:00",
@@ -847,14 +847,14 @@ Content-Length: 804
   "free" : false,
   "eventStatus" : "DRAFT",
   "_links" : {
+    "self" : {
+      "href" : "http://tommy.me/api/events/32"
+    },
     "query-events" : {
       "href" : "http://tommy.me/api/events"
     },
-    "self" : {
-      "href" : "http://tommy.me/api/events/1"
-    },
     "update-event" : {
-      "href" : "http://tommy.me/api/events/1"
+      "href" : "http://tommy.me/api/events/32"
     },
     "profile" : {
       "href" : "/docs/html5/index.html#resources-events-create"
@@ -1075,14 +1075,58 @@ Content-Length: 804
 </div>
 <div class="sect3">
 <h4 id="resources-events-update_curl_request"><a class="link" href="#resources-events-update_curl_request">Example request</a></h4>
-<div class="paragraph">
-<p>Snippet curl-request not found for operation::update-event</p>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash" data-lang="bash">$ curl 'http://tommy.me/api/events/31' -i -X PUT \
+    -H 'Content-Type: application/json;charset=UTF-8' \
+    -d '{
+  "name" : "Update Event",
+  "description" : "test event",
+  "beginEnrollmentDateTime" : "2022-11-14T20:32:00",
+  "closeEnrollmentDateTime" : "2022-11-15T20:32:00",
+  "beginEventDateTime" : "2022-11-16T20:32:00",
+  "endEventDateTime" : "2022-11-17T20:32:00",
+  "location" : "강남역 D2 스타트업 팩토리",
+  "basePrice" : 100,
+  "maxPrice" : 200,
+  "limitOfEnrollment" : 100
+}'</code></pre>
+</div>
 </div>
 </div>
 <div class="sect3">
 <h4 id="resources-events-update_http_response"><a class="link" href="#resources-events-update_http_response">Example response</a></h4>
-<div class="paragraph">
-<p>Snippet http-response not found for operation::update-event</p>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight nowrap"><code class="language-http" data-lang="http">HTTP/1.1 200 OK
+Content-Type: application/hal+json
+Content-Length: 634
+
+{
+  "id" : 31,
+  "name" : "Update Event",
+  "description" : "test event",
+  "beginEnrollmentDateTime" : "2022-11-14T20:32:00",
+  "closeEnrollmentDateTime" : "2022-11-15T20:32:00",
+  "beginEventDateTime" : "2022-11-16T20:32:00",
+  "endEventDateTime" : "2022-11-17T20:32:00",
+  "location" : "강남역 D2 스타트업 팩토리",
+  "basePrice" : 100,
+  "maxPrice" : 200,
+  "limitOfEnrollment" : 100,
+  "offline" : true,
+  "free" : false,
+  "eventStatus" : "DRAFT",
+  "_links" : {
+    "self" : {
+      "href" : "http://tommy.me/api/events/31"
+    },
+    "profile" : {
+      "href" : "/docs/index.html#resources-events-update"
+    }
+  }
+}</code></pre>
+</div>
 </div>
 </div>
 <div class="sect3">

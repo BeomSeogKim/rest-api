@@ -48,6 +48,11 @@ dependencies {
     // Ascii Doc
     asciidoctor 'org.springframework.restdocs:spring-restdocs-asciidoctor:2.0.2.RELEASE'
     testCompileOnly 'org.springframework.restdocs:spring-restdocs-mockmvc:2.0.2.RELEASE'
+
+    //Spring Security
+    // https://mvnrepository.com/artifact/org.springframework.security.oauth.boot/spring-security-oauth2-autoconfigure
+    implementation group: 'org.springframework.security.oauth.boot', name: 'spring-security-oauth2-autoconfigure', version: '2.6.6'
+
 }
 ext {
     snippetsDir = file('build/generated-snippets')
