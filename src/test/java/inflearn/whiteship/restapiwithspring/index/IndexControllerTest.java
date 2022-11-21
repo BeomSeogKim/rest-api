@@ -1,5 +1,6 @@
 package inflearn.whiteship.restapiwithspring.index;
 
+import inflearn.whiteship.restapiwithspring.common.BaseControllerTest;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,12 +15,12 @@ import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuild
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-@ExtendWith({SpringExtension.class, RestDocumentationExtension.class})
+//@ExtendWith({SpringExtension.class, RestDocumentationExtension.class})
 //@WebMvcTest     // Web 전용 Bean 들만 등록을 해주고 Repository 는 등록을 안해줌
-@SpringBootTest
-@AutoConfigureMockMvc
-@ActiveProfiles("test")
-public class IndexControllerTest {
+//@SpringBootTest
+//@AutoConfigureMockMvc
+//@ActiveProfiles("test")
+public class IndexControllerTest extends BaseControllerTest {
 
     @Autowired
     MockMvc mockMvc;
