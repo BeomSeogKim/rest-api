@@ -1,5 +1,7 @@
 package inflearn.whiteship.restapiwithspring.events;
 
+import inflearn.whiteship.restapiwithspring.accounts.Account;
+import inflearn.whiteship.restapiwithspring.accounts.AccountService;
 import inflearn.whiteship.restapiwithspring.common.BaseControllerTest;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -7,13 +9,20 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.hateoas.MediaTypes;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
+import org.springframework.mock.web.MockHttpServletResponse;
 import org.springframework.restdocs.RestDocumentationContextProvider;
+import org.springframework.security.oauth2.common.util.Jackson2JsonParser;
+import org.springframework.test.web.servlet.ResultActions;
+import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
 
 import java.time.LocalDateTime;
+import java.util.Set;
 import java.util.stream.IntStream;
 
+import static inflearn.whiteship.restapiwithspring.accounts.AccountRole.ADMIN;
+import static inflearn.whiteship.restapiwithspring.accounts.AccountRole.USER;
 import static inflearn.whiteship.restapiwithspring.events.EventStatus.DRAFT;
 import static inflearn.whiteship.restapiwithspring.events.EventStatus.PUBLISHED;
 import static org.springframework.restdocs.headers.HeaderDocumentation.*;
@@ -21,9 +30,11 @@ import static org.springframework.restdocs.hypermedia.HypermediaDocumentation.li
 import static org.springframework.restdocs.hypermedia.HypermediaDocumentation.links;
 import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.document;
 import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.documentationConfiguration;
+import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.post;
 import static org.springframework.restdocs.operation.preprocess.Preprocessors.modifyUris;
 import static org.springframework.restdocs.operation.preprocess.Preprocessors.prettyPrint;
 import static org.springframework.restdocs.payload.PayloadDocumentation.*;
+import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.httpBasic;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
@@ -32,6 +43,9 @@ public class EventControllerTests extends BaseControllerTest {
 
     @Autowired
     EventRepository eventRepository;
+
+    @Autowired
+    AccountService accountService;
 
     @BeforeEach
     public void setup(WebApplicationContext webApplicationContext,
@@ -65,8 +79,9 @@ public class EventControllerTests extends BaseControllerTest {
                 .build();
 
 
-        mockMvc.perform(post("/api/events/")
-                        .contentType(MediaType.APPLICATION_JSON_UTF8)
+        mockMvc.perform(post("/api/events")
+                        .header(HttpHeaders.AUTHORIZATION, "Bearer " + getAccessToken())
+                        .contentType(MediaType.APPLICATION_JSON)
                         .accept(MediaTypes.HAL_JSON)
                         .content(objectMapper.writeValueAsString(event)))
                 .andDo(print())  // 요청받은 정보를 테스트 상에서 확인 할 수 있음
@@ -107,7 +122,7 @@ public class EventControllerTests extends BaseControllerTest {
                                 headerWithName(HttpHeaders.LOCATION).description("Location Header"),
                                 headerWithName(HttpHeaders.CONTENT_TYPE).description("Content Type")
                         ),
-                        responseFields(      // Relaxed 는 문서의 일부분만 확인 하기 때문에 모든 값들을 검증해 줄 필요는 없음.
+                        relaxedResponseFields(      // Relaxed 는 문서의 일부분만 확인 하기 때문에 모든 값들을 검증해 줄 필요는 없음.
                                 fieldWithPath("id").description("identifier of new event"),
                                 fieldWithPath("name").description("Name of new event"),
                                 fieldWithPath("description").description("description of new event"),
@@ -132,6 +147,30 @@ public class EventControllerTests extends BaseControllerTest {
                 ));
 
 
+    }
+
+    private String getAccessToken() throws Exception {
+        // Given
+        String username = "kbs4520@naver.com";
+        String password = "Tommy";
+        Account account = Account.builder()
+                .email(username)
+                .password(password)
+                .roles(Set.of(ADMIN, USER))
+                .build();
+        this.accountService.saveAccount(account);
+        String clientId = "myApp";
+        String clientSecret = "pass";
+
+        ResultActions perform = this.mockMvc.perform(MockMvcRequestBuilders.post("/oauth/token")
+                .with(httpBasic(clientId, clientSecret))
+                .param("username", username)
+                .param("password", password)
+                .param("grant_type", "password"));
+
+        var responseBody = perform.andReturn().getResponse().getContentAsString();
+        Jackson2JsonParser parser = new Jackson2JsonParser();
+        return parser.parseMap(responseBody).get("access_token").toString();
     }
 
     @Test
