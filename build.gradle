@@ -50,8 +50,9 @@ dependencies {
     testCompileOnly 'org.springframework.restdocs:spring-restdocs-mockmvc:2.0.2.RELEASE'
 
     //Spring Security
-    // https://mvnrepository.com/artifact/org.springframework.security.oauth.boot/spring-security-oauth2-autoconfigure
-    implementation group: 'org.springframework.security.oauth.boot', name: 'spring-security-oauth2-autoconfigure', version: '2.6.6'
+//    implementation 'org.springframework.boot:spring-boot-starter-security'
+// https://mvnrepository.com/artifact/org.springframework.security.oauth.boot/spring-security-oauth2-autoconfigure
+    implementation group: 'org.springframework.security.oauth.boot', name: 'spring-security-oauth2-autoconfigure', version: '2.1.0.RELEASE'
 
 }
 ext {

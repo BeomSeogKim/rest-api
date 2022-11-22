@@ -20,7 +20,7 @@ import java.util.Optional;
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
 
 
-@Controller
+@RestController
 @RequestMapping(value = "/api/events", produces = MediaTypes.HAL_JSON_VALUE)
 public class EventController {
     private final EventRepository eventRepository;
